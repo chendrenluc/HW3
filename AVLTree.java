@@ -1,6 +1,6 @@
 
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Connor Hendren 002 ***
  *
  * This java file is a Java object implementing simple AVL Tree.
  * You are to complete the deleteElement method.
@@ -342,7 +342,7 @@ class LUC_AVLTree {
      */
 
     private Node deleteElement(int value, Node node) {
-
+            
         /*
          * ADD CODE HERE
          * 
@@ -361,7 +361,50 @@ class LUC_AVLTree {
          * code for each. You can also look at the method InsertElement, as it has do
          * do many of the same things as this method.
          */
-
+            
+            //Check for null first as a base case
+            if (node == null) {
+                return null
+                        }
+            
+            //Find the node to delete
+            //Have to be able to traverse the whole tree
+            //If value is less than current node go left
+            if (value < node.value) {
+                    //Recursion for the next value
+                    node.leftChild = deleteElement(value, node.leftChild);
+            } 
+            //If value is greater than current node go right
+            else if (value > node.value) {
+                    //Recursion for the next value
+                    node.rightChild = deleteElement(value, node.rightChild);
+            } else {
+                    //Found the node that needs to be deleted
+                    //Have to account for all possible placements and cases
+                    //If it's a leaf node (easy)
+                    if (node.leftChild == null && node.rightChild == null) {
+                            return null;
+                    }
+                    //If there is only a right child
+                    else if (node.leftChild == null && node.rightChild != null) {
+                            return node.rightChild;
+                    }
+                    //If there is only a left child
+                    else if (node.rightChild == null && node.leftChild != null) {
+                            return node.leftChild;
+                    }
+                    //If there are two children
+                            //Should just be "else", since all other cases have been checked already
+                    else {
+                            //Find the smallest in the right subtree
+                            Node successor = minValueNode(node.rightChild);
+                            //Replace current node value
+                            node.value = successor.value;
+                            //Delete the successor now
+                            node.rightChild = deleteElement(successor.value, node.rightChild);
+                    }
+            }
+            
         return node;
     }
 
