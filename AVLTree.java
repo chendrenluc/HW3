@@ -404,8 +404,35 @@ class LUC_AVLTree {
                             node.rightChild = deleteElement(successor.value, node.rightChild);
                     }
             }
-            
-        return node;
+            //Now update the height of the tree
+            //Use the built in functions
+            node.height = getMaxHeight(getHeight(node.leftChild), getHeight(node.rightChild)) + ;
+            //Rebalance the tree
+            //Check to see which side is unbalanced and then adjust
+            //Use the built in functions
+            //Get the factor and store it for later
+            int balanceFactor = getBalanceFactor(node);
+            //If it's skewed left
+            if (balanceFactor > 1) {
+                    if (getBalanceFactor(node.leftChild) >= 0) {
+                            //Rotate left
+                            return LLRotation(node);
+                    } else {
+                            //Rotate right
+                            return LRRotation(node);
+                    }
+            }
+            //If it's skewed right
+            if (balanceFactor < -1) {
+                    if (getBalanceFactor(node.rightChild) <= 0) {
+                            //Rotate right
+                            return RRRotation(node);
+                    } else {
+                            //Rotate left
+                            return RLRotation(node);
+                    }
+            }
+        return node; //Should now be updated
     }
 
 
